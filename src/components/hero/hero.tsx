@@ -4,15 +4,28 @@ import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, Cpu, Atom, Brain, ChevronDown, ExternalLink } from "lucide-react"
 
-export default function QuantumMindsLandingPage() {
-  const [activeSection, setActiveSection] = useState("innovation")
-  const particleCanvasRef = useRef(null)
-  const [scrollY, setScrollY] = useState(0)
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-  const [isExploring, setIsExploring] = useState(false)
-  const [hoverCard, setHoverCard] = useState(null)
+interface Section {
+  title: string
+  description: string
+  icon: JSX.Element
+  color: string
+}
 
-  const sections = {
+interface ResearchCard {
+  id: string
+  title: string
+  description: string
+  color: string
+}
+export default function QuantumMindsLandingPage() {
+  const [activeSection, setActiveSection] = useState<string>("innovation")
+  const particleCanvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [scrollY, setScrollY] = useState<number>(0)
+  const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
+  const [isExploring, setIsExploring] = useState<boolean>(false)
+  const [hoverCard, setHoverCard] = useState<string | null>(null)
+
+  const sections: Record<string, Section> = {
     innovation: {
       title: "Where Quantum Meets Imagination",
       description: "Pushing the boundaries of scientific understanding through revolutionary computational paradigms.",
@@ -34,7 +47,7 @@ export default function QuantumMindsLandingPage() {
     },
   }
 
-  const researchCards = [
+  const researchCards: ResearchCard[] = [
     {
       id: "quantum-neural",
       title: "Quantum Neural Networks",
@@ -83,7 +96,7 @@ export default function QuantumMindsLandingPage() {
 
     // Ensure canvas is the full window size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth
+      canvas.width  = window.innerWidth
       canvas.height = window.innerHeight
     }
 
@@ -95,7 +108,7 @@ export default function QuantumMindsLandingPage() {
 
     // Particle class
     class Particle {
-      constructor(x, y) {
+      constructor(x: any, y:any) {
         this.x = x
         this.y = y
         this.baseX = x
