@@ -17,6 +17,34 @@ interface ResearchCard {
   description: string
   color: string
 }
+
+interface Particle {
+  x: number
+  y: number
+  baseX: number
+  baseY: number
+  size: number
+  dx: number
+  dy: number
+  friction: number
+  energy: number
+  color: {
+    r: number
+    g: number
+    b: number
+  }
+  lifespan: number
+  maxSize: number
+  update: (mouse: Mouse, activeSection: string) => void
+  draw: (ctx: CanvasRenderingContext2D) => void
+}
+
+interface Mouse {
+  x: number | null
+  y: number | null
+  radius: number
+}
+
 export default function QuantumMindsLandingPage() {
   const [activeSection, setActiveSection] = useState<string>("innovation")
   const particleCanvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -80,7 +108,7 @@ export default function QuantumMindsLandingPage() {
 
   // Track cursor position
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setCursorPosition({ x: e.clientX, y: e.clientY })
     }
 
@@ -93,10 +121,11 @@ export default function QuantumMindsLandingPage() {
     if (!canvas) return
 
     const ctx = canvas.getContext("2d")
+    if (!ctx) return
 
     // Ensure canvas is the full window size
     const resizeCanvas = () => {
-      canvas.width  = window.innerWidth
+      canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
 
@@ -107,8 +136,25 @@ export default function QuantumMindsLandingPage() {
     window.addEventListener("resize", resizeCanvas)
 
     // Particle class
-    class Particle {
-      constructor(x: any, y:any) {
+    class ParticleClass implements Particle {
+      x: number
+      y: number
+      baseX: number
+      baseY: number
+      size: number
+      dx: number
+      dy: number
+      friction: number
+      energy: number
+      color: {
+        r: number
+        g: number
+        b: number
+      }
+      lifespan: number
+      maxSize: number
+
+      constructor(x: number, y: number) {
         this.x = x
         this.y = y
         this.baseX = x
@@ -127,7 +173,7 @@ export default function QuantumMindsLandingPage() {
         this.maxSize = 2 + Math.random() * 3
       }
 
-      update(mouse, activeSection) {
+      update(mouse: Mouse, activeSection: string) {
         // Apply section-specific color variations
         if (activeSection === "innovation") {
           this.color = {
@@ -185,7 +231,7 @@ export default function QuantumMindsLandingPage() {
         this.size = this.maxSize * (0.8 + Math.sin(Date.now() * 0.003 * this.energy) * 0.2)
       }
 
-      draw(ctx) {
+      draw(ctx: CanvasRenderingContext2D) {
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2)
 
         gradient.addColorStop(
@@ -218,7 +264,7 @@ export default function QuantumMindsLandingPage() {
       ctx.fillText(text, canvas.width / 2, canvas.height / 2)
 
       // Extract particle positions
-      const particleArray = []
+      const particleArray: Particle[] = []
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const data = imageData.data
 
@@ -231,14 +277,14 @@ export default function QuantumMindsLandingPage() {
           const alpha = data[index + 3]
 
           if (alpha > 128) {
-            particleArray.push(new Particle(x, y))
+            particleArray.push(new ParticleClass(x, y))
           }
         }
       }
 
       // Add some random particles for background effect
       for (let i = 0; i < (canvas.width * canvas.height) / 10000; i++) {
-        particleArray.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height))
+        particleArray.push(new ParticleClass(Math.random() * canvas.width, Math.random() * canvas.height))
       }
 
       return particleArray
@@ -248,8 +294,8 @@ export default function QuantumMindsLandingPage() {
     const particleList = createParticles()
 
     // Mouse tracking
-    const mouse = { x: null, y: null, radius: 100 }
-    const onMouseMove = (event) => {
+    const mouse: Mouse = { x: null, y: null, radius: 100 }
+    const onMouseMove = (event: MouseEvent) => {
       mouse.x = event.clientX
       mouse.y = event.clientY
     }
@@ -305,7 +351,7 @@ export default function QuantumMindsLandingPage() {
   }, [activeSection])
 
   // Parallax effect for background elements
-  const getParallaxStyle = (factor) => {
+  const getParallaxStyle = (factor: number) => {
     return {
       transform: `translate(${cursorPosition.x * factor}px, ${cursorPosition.y * factor}px)`,
     }
@@ -414,7 +460,6 @@ export default function QuantumMindsLandingPage() {
                   <motion.div
                     key={key}
                     onClick={() => setActiveSection(key)}
-                 
                     className={`
                       cursor-pointer p-4 rounded-xl transition-all duration-300 
                       ${
@@ -423,13 +468,9 @@ export default function QuantumMindsLandingPage() {
                           : "bg-gray-800/40 hover:bg-gray-800/60 border-l-4 border-transparent"
                       }
                     `}
-               
                   >
                     <div className="flex items-center space-x-4">
-                      <motion.div
-                    
-                 
-                      >
+                      <motion.div>
                         {section.icon}
                       </motion.div>
                       <div>
@@ -442,7 +483,6 @@ export default function QuantumMindsLandingPage() {
               </div>
 
               <motion.button
-              
                 onClick={() => setIsExploring(!isExploring)}
                 className="
                   flex items-center space-x-3 
@@ -481,14 +521,8 @@ export default function QuantumMindsLandingPage() {
               />
 
               <div className="relative p-8 z-10">
-                <motion.div
-                  className="text-center"
-               
-                >
-                  <motion.div
-                 
-                    key={activeSection}
-                  >
+                <motion.div className="text-center">
+                  <motion.div key={activeSection}>
                     <div className="flex justify-center mb-6">{sections[activeSection].icon}</div>
                     <h2
                       className={`text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r ${sections[activeSection].color}`}
@@ -505,7 +539,6 @@ export default function QuantumMindsLandingPage() {
                   <div className="relative h-full flex items-center justify-center">
                     <div className="text-center">
                       <p className="text-cyan-300 mb-2">Interactive Visualization</p>
-                    
                     </div>
                   </div>
                 </div>
@@ -515,7 +548,7 @@ export default function QuantumMindsLandingPage() {
 
           {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+            className="absolute bottom-8 xl:left-[46%] left-[44%] transform flex flex-col items-center"
             animate={{
               y: [0, 10, 0],
               opacity: [0.5, 1, 0.5],
@@ -526,7 +559,7 @@ export default function QuantumMindsLandingPage() {
               repeatType: "reverse",
             }}
           >
-            <p className="text-gray-400 text-sm mb-2">Scroll to explore</p>
+            <p className="text-gray-400 text-center text-sm mb-2">Scroll to explore</p>
             <ChevronDown className="w-6 h-6 text-cyan-400" />
           </motion.div>
         </section>
@@ -617,4 +650,3 @@ export default function QuantumMindsLandingPage() {
     </div>
   )
 }
-

@@ -14,17 +14,17 @@ type TeamMember = {
 export default function TeamNetwork() {
   // Sample team data
   const teamMembers: TeamMember[] = [
-    { id: 1, name: "Dr. Alex Chen", role: "Lead Researcher", image: "/placeholder.svg?height=200&width=200" },
-    { id: 2, name: "Dr. Sarah Johnson", role: "Molecular Engineer", image: "/placeholder.svg?height=200&width=200" },
-    { id: 3, name: "Prof. Michael Lee", role: "Quantum Physicist", image: "/placeholder.svg?height=200&width=200" },
+    { id: 1, name: "Name1", role: "job1", image: "/placeholder.svg?height=200&width=200" },
+    { id: 2, name: "Name2", role: "job2", image: "/placeholder.svg?height=200&width=200" },
+    { id: 3, name: "Name3", role: "job3", image: "/placeholder.svg?height=200&width=200" },
     {
       id: 4,
-      name: "Dr. Emily Rodriguez",
-      role: "Nanotechnology Specialist",
+      name: "Name4",
+      role: "job4",
       image: "/placeholder.svg?height=200&width=200",
     },
-    { id: 5, name: "Dr. James Wilson", role: "Data Scientist", image: "/placeholder.svg?height=200&width=200" },
-    { id: 6, name: "Dr. Lisa Park", role: "Biomedical Engineer", image: "/placeholder.svg?height=200&width=200" },
+    { id: 5, name: "Name5", role: "job5", image: "/placeholder.svg?height=200&width=200" },
+    { id: 6, name: "Name6", role: "job6", image: "/placeholder.svg?height=200&width=200" },
   ]
 
   const [hoveredMember, setHoveredMember] = useState<number | null>(null)
@@ -174,9 +174,9 @@ export default function TeamNetwork() {
     <div className="w-full min-h-screen bg-gray-900 text-white py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">Our Research Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">Our Team</h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            A collaborative network of experts pushing the boundaries of nanotechnology and molecular engineering.
+            A collaborative network of 
           </p>
         </div>
 
@@ -248,9 +248,7 @@ export default function TeamNetwork() {
           ))}
         </div>
 
-        <div className="text-center">
-          <p className="text-gray-400 text-sm">Hover over team members to see their connections and details</p>
-        </div>
+    
       </div>
     </div>
   )
