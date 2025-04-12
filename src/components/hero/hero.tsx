@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, Cpu, Atom, Brain, ChevronDown, ExternalLink } from "lucide-react"
-
+import { useIsMobile } from "../../../hooks/use-mobile"
 interface Section {
   title: string
   description: string
@@ -52,6 +52,7 @@ export default function QuantumMindsLandingPage() {
   const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const [isExploring, setIsExploring] = useState<boolean>(false)
   const [hoverCard, setHoverCard] = useState<string | null>(null)
+  const isMobile = useIsMobile()
 
   const sections: Record<string, Section> = {
     innovation: {
@@ -254,7 +255,7 @@ export default function QuantumMindsLandingPage() {
 
       // Set up text properties
       const text = "Nano in EOR"
-      const fontSize = Math.min(120, canvas.width / 10)
+      const fontSize = isMobile ? 70: Math.min(120, canvas.width / 10)
       ctx.font = `bold ${fontSize}px 'Inter', sans-serif`
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
@@ -269,7 +270,7 @@ export default function QuantumMindsLandingPage() {
       const data = imageData.data
 
       // Adjust density based on screen size
-      const density = Math.max(1, Math.floor(canvas.width / 180))
+      const density = Math.max(1, Math.floor(canvas.width / (isMobile ? 100 : 180)))
 
       for (let y = 0; y < canvas.height; y += density) {
         for (let x = 0; x < canvas.width; x += density) {
@@ -294,7 +295,7 @@ export default function QuantumMindsLandingPage() {
     const particleList = createParticles()
 
     // Mouse tracking
-    const mouse: Mouse = { x: null, y: null, radius: 100 }
+    const mouse: Mouse = { x: null, y: null, radius: isMobile? 40 : 100 }
     const onMouseMove = (event: MouseEvent) => {
       mouse.x = event.clientX
       mouse.y = event.clientY
@@ -483,7 +484,7 @@ export default function QuantumMindsLandingPage() {
               </div>
 
               <motion.button
-                onClick={() => setIsExploring(!isExploring)}
+                // onClick={() => setIsExploring(!isExploring)}
                 className="
                   flex items-center space-x-3 
                   bg-gradient-to-r from-cyan-500 to-blue-600 
@@ -499,9 +500,9 @@ export default function QuantumMindsLandingPage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              // initial={{ opacity: 0, x: 50 }}
+              // animate={{ opacity: 1, x: 0 }}
+              // transition={{ duration: 0.8, delay: 0.2 }}
               className="hidden md:block relative"
             >
               <motion.div
@@ -548,16 +549,16 @@ export default function QuantumMindsLandingPage() {
 
           {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 xl:left-[46%] left-[44%] transform flex flex-col items-center"
-            animate={{
-              y: [0, 10, 0],
-              opacity: [0.5, 1, 0.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
+            className="absolute bottom-8 xl:left-[46%] left-[42%] transform flex flex-col items-center"
+            // animate={{
+            //   y: [0, 10, 0],
+            //   opacity: [0.5, 1, 0.5],
+            // }}
+            // transition={{
+            //   duration: 2,
+            //   repeat: Number.POSITIVE_INFINITY,
+            //   repeatType: "reverse",
+            // }}
           >
             <p className="text-gray-400 text-center text-sm mb-2">Scroll to explore</p>
             <ChevronDown className="w-6 h-6 text-cyan-400" />

@@ -7,6 +7,9 @@ import QuantumMindsLandingPage from "@/components/hero/hero"
 import EORShowcase from "@/components/showcase/showcase"
 import EORComparisonVisualizations from "@/components/visualization/visualization"
 import TeamNetwork from "@/components/team/team"
+import { LuBotMessageSquare } from "react-icons/lu";
+import ChatButton from "@/components/chat-button/chat-button"
+import AbstractFooter from "@/components/footer/footer"
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -41,7 +44,7 @@ export default function Home() {
         >
           <div className="flex flex-col items-center justify-center gap-16">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-              <Image src="/pioneer-logo.svg" alt="Pioneer Logo" width={250} height={100} priority />
+              <Image className="animate-pulse"  src="/logo.png" alt="Nano Logo" width={250} height={100} priority />
             </motion.div>
 
             <div className="flex flex-col items-center gap-4">
@@ -66,10 +69,12 @@ export default function Home() {
         </motion.div>
       ) : (
        <div>
+        <ChatButton />
       <QuantumMindsLandingPage />
       <EORShowcase />
       <EORComparisonVisualizations />
       <TeamNetwork />
+      <AbstractFooter />
     </div>
       )}
 
