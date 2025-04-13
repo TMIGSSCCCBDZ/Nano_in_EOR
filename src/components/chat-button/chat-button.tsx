@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { MessageSquare, X, Send, Loader2, Trash2 } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { X, Send, Loader2, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -17,7 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { LuBotMessageSquare } from "react-icons/lu";
+import { LuBotMessageSquare } from "react-icons/lu"
 
 export default function ChatButton() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,6 +26,7 @@ export default function ChatButton() {
   const [listening, setListening] = useState(false)
   const [loading, setLoading] = useState(false)
   const [history, setHistory] = useState<{ question: string; answer: string }[]>([])
+  const historyContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const storedHistory = localStorage.getItem("chatHistory")
@@ -33,6 +34,15 @@ export default function ChatButton() {
       setHistory(JSON.parse(storedHistory))
     }
   }, [])
+
+  // This effect will now properly scroll to show the newest message
+  useEffect(() => {
+    if (historyContainerRef.current && history.length > 0) {
+      // Scroll to the bottom since we're using flex-col-reverse
+      // This ensures the newest message (which appears at the top visually) is in view
+      historyContainerRef.current.scrollTop = 0
+    }
+  }, [history])
 
   const handleAsk = async () => {
     if (!question.trim()) return
@@ -45,10 +55,13 @@ export default function ChatButton() {
         body: JSON.stringify({ question }),
       })
       const data = await res.json()
-      setAnswer(data.answer)
-      const newHistory = [...history, { question, answer: data.answer }]
+      
+      // Save the new history item
+      const newHistoryItem = { question, answer: data }
+      const newHistory = [newHistoryItem, ...history]
       setHistory(newHistory)
       localStorage.setItem("chatHistory", JSON.stringify(newHistory))
+      setAnswer(data)
       setQuestion("")
     } catch (error) {
       console.error("Error fetching answer:", error)
@@ -235,7 +248,10 @@ export default function ChatButton() {
                   <h3 className="text-lg font-medium text-blue-200">Conversation History</h3>
                 </div>
 
-                <div className="space-y-4 flex flex-col-reverse gap-y-3 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
+                <div
+                  ref={historyContainerRef}
+                  className="space-y-4 flex flex-col gap-y-3 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar"
+                >
                   {history.map((entry, index) => (
                     <div key={index} className="group">
                       <div className="border border-blue-800/30 bg-blue-950/20 p-4 rounded-lg hover:bg-blue-900/20 transition-colors">

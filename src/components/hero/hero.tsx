@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, Cpu, Atom, Brain, ChevronDown, ExternalLink } from "lucide-react"
 import { useIsMobile } from "../../../hooks/use-mobile"
+import ClientComponent from "../voice-provider/wrapper-voice"
+
 interface Section {
   title: string
   description: string
@@ -46,6 +48,7 @@ interface Mouse {
 }
 
 export default function QuantumMindsLandingPage() {
+  
   const [activeSection, setActiveSection] = useState<string>("innovation")
   const particleCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const [scrollY, setScrollY] = useState<number>(0)

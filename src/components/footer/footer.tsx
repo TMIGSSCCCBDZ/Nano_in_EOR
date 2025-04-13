@@ -13,7 +13,6 @@ export default function AbstractFooter() {
 
         {/* Abstract lines */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-        <div className="absolute top-1/3 right-0 w-1/3 h-px bg-gradient-to-r from-blue-600/20 to-transparent"></div>
         <div className="absolute bottom-1/4 left-0 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-400/10 to-transparent"></div>
 
         {/* Floating dots */}
@@ -71,7 +70,7 @@ export default function AbstractFooter() {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={18} className="text-blue-400 flex-shrink-0" />
-                <span className="text-blue-100/70 text-sm">+2017751425</span>
+                <span className="text-blue-100/70 text-sm">+20107751425</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={18} className="text-blue-400 flex-shrink-0" />
