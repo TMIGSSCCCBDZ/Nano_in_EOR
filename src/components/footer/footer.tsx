@@ -22,6 +22,7 @@ export default function AbstractFooter() {
         <div className="absolute bottom-1/2 left-1/2 w-2 h-2 bg-blue-400/50 rounded-full"></div>
       </div>
 
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Company info */}
@@ -35,10 +36,11 @@ export default function AbstractFooter() {
             </p>
             <div className="flex space-x-4 pt-2">
            
-              <a href="#" className="text-blue-300 hover:text-blue-100 transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/zeyad-deeban-866291203/" className="text-blue-300 hover:text-blue-100 transition-colors" aria-label="LinkedIn">
                 <Linkedin size={18} />
               </a>
             
+
             </div>
           </div>
 
@@ -46,14 +48,14 @@ export default function AbstractFooter() {
           <div>
             <h4 className="text-blue-200 font-medium mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {["Home", "About Us", "Research", "Case Studies"].map((item) => (
-                <li key={item}>
+              {[{name:"Home",link:'#'}, {name:"About Us",link:"#about"}, {name:"Research",link:"https://drive.google.com/file/d/1Nr731rd4TceMUS_HlczgyFBU3MNkpA3Z/view?usp=sharing"}, {name:"Case Studies", link:"https://drive.google.com/drive/folders/1FoDWiqPs5Mx6bqDPWlUXCMU-u_vrqZ8t"}].map(({name,link}) => (
+                <li key={name}>
                   <Link
-                    href="#"
+                    href={link}
                     className="text-blue-100/70 hover:text-blue-300 transition-colors text-sm flex items-center"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-                    {item}
+                    {name}
                   </Link>
                 </li>
               ))}
@@ -66,7 +68,7 @@ export default function AbstractFooter() {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <MapPin size={18} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                <span className="text-blue-100/70 text-sm">My Beloved ciy, Suez😁</span>
+                <span className="text-blue-100/70 text-sm">Suez</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={18} className="text-blue-400 flex-shrink-0" />

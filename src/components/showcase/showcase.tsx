@@ -68,10 +68,10 @@ export default function EORShowcase() {
 
     // Preload poster images
     const nanoImage = new Image()
-    nanoImage.src = "/videos/nano-eor-poster.jpg"
+    nanoImage.src = "https://uh.edu/nsm/_images/phys/news-events/2021/20210423-oil-recovery.jpg"
     
     const co2Image = new Image()
-    co2Image.src = "/co21.png"
+    co2Image.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfVO947VRAo1kek8qIYLre0bIz7sfkiNdP_Q&s"
     
     // Clean up event listeners
     return () => {
@@ -96,10 +96,10 @@ export default function EORShowcase() {
             loop
             playsInline
             preload="auto"
-            poster="/videos/nano-eor-poster.jpg"
+            poster="https://uh.edu/nsm/_images/phys/news-events/2021/20210423-oil-recovery.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/Co.mp4" type="video/mp4" />
+            <source src="https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/Super-IOR%20new%20generation%20of%20nano%20chemical%20for%20EOR%20(English%20Version).mp4?alt=media&token=eb801fb3-5a7c-41e8-94d4-40627ce1a4cf" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute inset-0 bg-black/50" />
@@ -113,10 +113,10 @@ export default function EORShowcase() {
             loop
             playsInline
             preload="auto"
-            poster="/co21.png"
+            poster="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfVO947VRAo1kek8qIYLre0bIz7sfkiNdP_Q&s"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/CO2 Enhanced Oil Recovery.mp4" type="video/mp4" />
+            <source src="https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/CO2%20Enhanced%20Oil%20Recovery.mp4?alt=media&token=e3f17365-2e5b-4e02-b649-d2ff22fb97ee" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute inset-0 bg-black/50" />
@@ -211,12 +211,6 @@ export default function EORShowcase() {
                   <span>Recovery increase: 15-25%</span>
                 </div>
                 <div className="flex-grow"></div>
-                <Button 
-                  variant="outline" 
-                  className="text-primary border-primary/20 hover:bg-primary/10 backdrop-blur-sm px-6"
-                >
-                  Learn more about Nano EOR
-                </Button>
               </div>
             </motion.div>
           )}
@@ -245,12 +239,6 @@ export default function EORShowcase() {
                   <span>Carbon offset: ~0.6 tonnes CO₂/barrel</span>
                 </div>
                 <div className="flex-grow"></div>
-                <Button 
-                  variant="outline" 
-                  className="text-primary border-primary/20 hover:bg-primary/10 backdrop-blur-sm px-6"
-                >
-                  Learn more about CO₂ Injection
-                </Button>
               </div>
             </motion.div>
           )}

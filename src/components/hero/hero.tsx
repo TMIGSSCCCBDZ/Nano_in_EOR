@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, Cpu, Atom, Brain, ChevronDown, ExternalLink } from "lucide-react"
+import { ArrowRight, Cpu, Atom, Brain, ChevronDown, ExternalLink, Droplet, Microscope, FlaskConical } from "lucide-react"
 import { useIsMobile } from "../../../hooks/use-mobile"
 import ClientComponent from "../voice-provider/wrapper-voice"
+import { useRouter } from "next/navigation"
 
 interface Section {
   title: string
@@ -55,51 +56,70 @@ export default function QuantumMindsLandingPage() {
   const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const [isExploring, setIsExploring] = useState<boolean>(false)
   const [hoverCard, setHoverCard] = useState<string | null>(null)
+  const [data, setData] = useState<any>()
+
   const isMobile = useIsMobile()
+const sections: Record<string, Section> = {
+  innovation: {
+    title: "Nano-Innovation in EOR",
+    description: "Harnessing nanotechnology to enhance oil recovery through precision targeting and improved sweep efficiency.",
+    icon: <FlaskConical className="w-16 h-16 text-yellow-400" />, // You may choose a better fitting icon
+    color: "from-yellow-400 to-orange-600",
+  },
+  technology: {
+    title: "Smart Nano-Formulations",
+    description:
+      "Engineering nanoparticles that alter reservoir wettability, reduce interfacial tension, and improve mobility control.",
+    icon: <Microscope className="w-16 h-16 text-green-400" />,
+    color: "from-green-400 to-lime-600",
+  },
+  potential: {
+    title: "Transforming Reservoir Performance",
+    description:
+      "Unlocking residual oil, extending field life, and enabling cost-effective recovery in mature and tight formations.",
+    icon: <Droplet className="w-16 h-16 text-blue-400" />,
+    color: "from-blue-400 to-indigo-600",
+  },
+}
 
-  const sections: Record<string, Section> = {
-    innovation: {
-      title: "Where Quantum Meets Imagination",
-      description: "Pushing the boundaries of scientific understanding through revolutionary computational paradigms.",
-      icon: <Atom className="w-16 h-16 text-cyan-400" />,
-      color: "from-cyan-400 to-blue-600",
-    },
-    technology: {
-      title: "Computational Frontiers Redefined",
-      description:
-        "Breakthrough algorithms that simulate the intricate dance of quantum particles and neural networks.",
-      icon: <Cpu className="w-16 h-16 text-emerald-400" />,
-      color: "from-emerald-400 to-teal-600",
-    },
-    potential: {
-      title: "Unlocking Human Cognitive Potential",
-      description: "Transforming how we understand intelligence, consciousness, and the fundamental fabric of reality.",
-      icon: <Brain className="w-16 h-16 text-indigo-400" />,
-      color: "from-indigo-400 to-purple-600",
-    },
-  }
-
-  const researchCards: ResearchCard[] = [
-    {
-      id: "quantum-neural",
-      title: "Quantum Neural Networks",
-      description: "Hybrid systems that leverage quantum computing principles to enhance neural network capabilities.",
-      color: "from-cyan-500 to-blue-700",
-    },
-    {
-      id: "consciousness",
-      title: "Consciousness Simulation",
-      description: "Exploring the boundaries between artificial intelligence and human consciousness.",
-      color: "from-purple-500 to-pink-700",
-    },
-    {
-      id: "quantum-algorithms",
-      title: "Novel Quantum Algorithms",
-      description: "Developing new computational approaches that harness quantum mechanical phenomena.",
-      color: "from-emerald-500 to-green-700",
-    },
+ const researchCards: ResearchCard[] = [
+  {
+    id: "nano-wettability",
+    title: "Wettability Alteration",
+    description: "Nanoparticles engineered to shift rock wettability toward water-wet conditions for better oil displacement.",
+    color: "from-orange-500 to-yellow-700",
+  },
+  {
+    id: "nano-emulsion",
+    title: "Nano-Emulsions for Mobility",
+    description: "Stabilized nano-emulsions that reduce interfacial tension and enhance mobility of trapped oil.",
+    color: "from-lime-500 to-green-700",
+  },
+  {
+    id: "smart-nano-tracers",
+    title: "Smart Nano-Tracers",
+    description: "Intelligent nanoparticles for real-time reservoir monitoring and enhanced sweep diagnostics.",
+    color: "from-blue-500 to-indigo-700",
+  },
+]
+const nanoData = {
+  innovation: [
+    { phase: "Initial", wettability: 0.3 },
+    { phase: "After Nano-EOR", wettability: 0.7 },
+  ],
+  technology: [
+    { time: "Day 1", ift: 30 },
+    { time: "Day 2", ift: 20 },
+    { time: "Day 3", ift: 10 },
+    { time: "Day 4", ift: 5 },
+  ],
+  potential: [
+    { month: "Jan", recovery: 28 },
+    { month: "Feb", recovery: 32 },
+    { month: "Mar", recovery: 37 },
+    { month: "Apr", recovery: 42 },
   ]
-
+}
   // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
@@ -251,6 +271,7 @@ export default function QuantumMindsLandingPage() {
       }
     }
 
+
     // Create particles from text
     const createParticles = () => {
       // Ensure canvas is cleared and text is drawn
@@ -322,12 +343,28 @@ export default function QuantumMindsLandingPage() {
       if (activeSection === "innovation") {
         bgGradient.addColorStop(0, "rgba(0, 50, 100, 0.2)")
         bgGradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+          setData([
+    { phase: "Initial", wettability: 0.3 },
+    { phase: "After Nano-EOR", wettability: 0.7 },
+  ])
       } else if (activeSection === "technology") {
         bgGradient.addColorStop(0, "rgba(0, 80, 60, 0.2)")
         bgGradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+         setData([
+    { time: "Day 1", ift: 30 },
+    { time: "Day 2", ift: 20 },
+    { time: "Day 3", ift: 10 },
+    { time: "Day 4", ift: 5 },
+  ])
       } else if (activeSection === "potential") {
         bgGradient.addColorStop(0, "rgba(50, 0, 100, 0.2)")
         bgGradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+          setData([
+    { month: "Jan", recovery: 28 },
+    { month: "Feb", recovery: 32 },
+    { month: "Mar", recovery: 37 },
+    { month: "Apr", recovery: 42 },
+  ])
       }
 
       ctx.fillStyle = bgGradient
@@ -360,7 +397,7 @@ export default function QuantumMindsLandingPage() {
       transform: `translate(${cursorPosition.x * factor}px, ${cursorPosition.y * factor}px)`,
     }
   }
-
+    const router = useRouter()
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 text-white overflow-hidden">
       {/* Animated background elements */}
@@ -371,7 +408,7 @@ export default function QuantumMindsLandingPage() {
       </div>
 
       {/* Particle canvas */}
-      <canvas ref={particleCanvasRef} className="absolute inset-0 z-0 opacity-70" />
+    {isMobile ?("") : (<canvas ref={particleCanvasRef} className="absolute inset-0 z-0 opacity-70" />) }  
 
       {/* Custom cursor effect */}
       <div
@@ -395,39 +432,18 @@ export default function QuantumMindsLandingPage() {
             Nano Tech
           </div>
 
-          <nav className="hidden md:flex space-x-8">
-            {["Research", "Technology", "About", "Contact"].map((item) => (
-              <motion.a
-                key={item}
-                href="#"
-                className="text-gray-300 hover:text-white relative"
-                whileHover={{ scale: 1.05 }}
-                onMouseEnter={() => {
-                  const audio = new Audio("/hover.mp3")
-                  audio.volume = 0.1
-                  audio.play().catch(() => {})
-                }}
-              >
-                {item}
-                <motion.span
-                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400"
-                  initial={{ width: 0 }}
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.2 }}
-                />
-              </motion.a>
-            ))}
-          </nav>
-
-          <motion.button
+       
+          <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            href="https://www.linkedin.com/in/zeyad-deeban-866291203"
             className="px-4 py-2 rounded-full border border-cyan-500/50 text-cyan-400 hover:bg-cyan-900/30"
           >
             Connect
-          </motion.button>
+          </motion.a>
         </motion.div>
       </header>
+
 
       {/* Main content */}
       <main className="relative z-10">
@@ -455,8 +471,7 @@ export default function QuantumMindsLandingPage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Exploring the intersection of quantum computing and cognitive science to redefine the boundaries of
-                human potential.
+              Exploring the intersection of nano technology and reservoir engineering to redefine the boundaries of Enhanced Oil Recovery.
               </motion.p>
 
               <div className="space-y-4">
@@ -478,7 +493,7 @@ export default function QuantumMindsLandingPage() {
                         {section.icon}
                       </motion.div>
                       <div>
-                        <h3 className="text-xl font-bold">{section.title}</h3>
+                        <h3 className="text-xl font-bold">{section.title}hh</h3>
                         <p className="text-gray-300 text-sm">{section.description}</p>
                       </div>
                     </div>
@@ -496,7 +511,10 @@ export default function QuantumMindsLandingPage() {
                   hover:shadow-xl hover:shadow-cyan-500/30
                   transition-all duration-300
                 "
+                onClick={() => {router.push('https://drive.google.com/file/d/1Nr731rd4TceMUS_HlczgyFBU3MNkpA3Z/view?usp=sharing')}}
+                
               >
+
                 <span>Explore Research</span>
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
@@ -537,21 +555,14 @@ export default function QuantumMindsLandingPage() {
                   </motion.div>
                 </motion.div>
 
-                {/* Interactive visualization */}
-                <div className="mt-8 h-48 relative overflow-hidden rounded-xl">
-                  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl"></div>
-                  <div className="relative h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-cyan-300 mb-2">Interactive Visualization</p>
-                    </div>
-                  </div>
-                </div>
+              
+              
               </div>
             </motion.div>
           </div>
 
           {/* Scroll indicator */}
-          <motion.div
+          {/* <motion.div
             className="absolute bottom-8 xl:left-[46%] left-[42%] transform flex flex-col items-center"
             // animate={{
             //   y: [0, 10, 0],
@@ -565,91 +576,11 @@ export default function QuantumMindsLandingPage() {
           >
             <p className="text-gray-400 text-center text-sm mb-2">Scroll to explore</p>
             <ChevronDown className="w-6 h-6 text-cyan-400" />
-          </motion.div>
+          </motion.div> */}
         </section>
 
         {/* Research section (conditionally rendered) */}
-        <AnimatePresence>
-          {isExploring && (
-            <motion.section
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-              className="py-20 bg-gradient-to-b from-transparent to-gray-900/80 backdrop-blur-sm"
-            >
-              <div className="container mx-auto px-6">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600"
-                >
-                  Current Research
-                </motion.h2>
-
-                <div className="grid md:grid-cols-3 gap-8">
-                  {researchCards.map((card, index) => (
-                    <motion.div
-                      key={card.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      whileHover={{
-                        y: -10,
-                        transition: { duration: 0.2 },
-                      }}
-                      onMouseEnter={() => setHoverCard(card.id)}
-                      onMouseLeave={() => setHoverCard(null)}
-                      className="relative rounded-xl overflow-hidden group"
-                    >
-                      <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-80`}></div>
-
-                      {/* Animated background particles */}
-                      <div className="absolute inset-0 overflow-hidden">
-                        {[...Array(20)].map((_, i) => (
-                          <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 rounded-full bg-white/30"
-                            style={{
-                              left: `${Math.random() * 100}%`,
-                              top: `${Math.random() * 100}%`,
-                            }}
-                            animate={{
-                              opacity: [0, 1, 0],
-                              scale: [0, 1.5, 0],
-                            }}
-                            transition={{
-                              duration: 2 + Math.random() * 3,
-                              repeat: Number.POSITIVE_INFINITY,
-                              delay: Math.random() * 2,
-                            }}
-                          />
-                        ))}
-                      </div>
-
-                      <div className="relative p-6 h-full flex flex-col">
-                        <h3 className="text-xl font-bold mb-2 text-white">{card.title}</h3>
-                        <p className="text-white/80 mb-4">{card.description}</p>
-
-                        <motion.div
-                          className="mt-auto flex items-center text-white/90"
-                          animate={{
-                            x: hoverCard === card.id ? 5 : 0,
-                          }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <span className="mr-2">Learn more</span>
-                          <ExternalLink className="w-4 h-4" />
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.section>
-          )}
-        </AnimatePresence>
+       
       </main>
     </div>
   )

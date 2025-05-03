@@ -7,24 +7,20 @@ import Image from "next/image"
 type TeamMember = {
   id: number
   name: string
-  role: string
   image: string
 }
 
 export default function TeamNetwork() {
   // Sample team data
   const teamMembers: TeamMember[] = [
-    { id: 1, name: "Name1", role: "job1", image: "/placeholder.svg?height=200&width=200" },
-    { id: 2, name: "Name2", role: "job2", image: "/placeholder.svg?height=200&width=200" },
-    { id: 3, name: "Name3", role: "job3", image: "/placeholder.svg?height=200&width=200" },
-    {
-      id: 4,
-      name: "Name4",
-      role: "job4",
-      image: "/placeholder.svg?height=200&width=200",
-    },
-    { id: 5, name: "Name5", role: "job5", image: "/placeholder.svg?height=200&width=200" },
-    { id: 6, name: "Name6", role: "job6", image: "/placeholder.svg?height=200&width=200" },
+    { id: 5, name: "Omar Essam",  image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/WhatsApp%20Image%202025-05-03%20at%206.53.20%20PM.jpeg?alt=media&token=b73f9dbd-c191-465f-a423-e4481e63ece3" },
+    { id: 6, name: "Eslam Salama",  image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/55d414f8-2802-4b28-9a66-8bbe8cbe1ca8.jpg?alt=media&token=2c4b999e-1731-4b99-8285-6f7ff3d7c584" },
+    { id: 7, name: "Zeyad Essam",  image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/WhatsApp%20Image%202025-05-03%20at%207.24.24%20PM.jpeg?alt=media&token=e9e11542-d36f-4ea3-8fc3-af75c16fa90e" },
+    {id: 4, name: "Mohamed Sakr",image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/WhatsApp%20Image%202025-05-03%20at%207.19.52%20PM.jpeg?alt=media&token=e8537aa6-3f70-4cfc-b069-57db8555362c"},
+    { id: 3, name: "Hesham Abdelhamed",  image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/WhatsApp%20Image%202025-05-03%20at%207.22.47%20PM.jpeg?alt=media&token=bb31e8f1-4b6c-43ea-bd6a-e0609a078c33" },
+    { id: 1, name: "Youssef Zahra", image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/WhatsApp%20Image%202025-05-03%20at%206.54.44%20PM.jpeg?alt=media&token=df242eb2-4c15-47c4-ae8a-a8c29461bf26" },
+    { id: 2, name: "Mahmoud Yasser",  image: "https://firebasestorage.googleapis.com/v0/b/slacknew-e82cd.appspot.com/o/2f51071e-0077-4061-8ba7-f713d7966e24.jpg?alt=media&token=7e47c13b-2a4a-4065-b076-54fe593f0c73" },
+
   ]
 
   const [hoveredMember, setHoveredMember] = useState<number | null>(null)
@@ -241,7 +237,7 @@ export default function TeamNetwork() {
                 `}
                 >
                   <p className="font-semibold text-cyan-400">{teamMembers[index].name}</p>
-                  <p className="text-xs text-gray-300">{teamMembers[index].role}</p>
+                  
                 </div>
               </div>
             </div>
