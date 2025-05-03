@@ -493,7 +493,7 @@ const nanoData = {
                         {section.icon}
                       </motion.div>
                       <div>
-                        <h3 className="text-xl font-bold">{section.title}hh</h3>
+                        <h3 className="text-xl font-bold">{section.title}</h3>
                         <p className="text-gray-300 text-sm">{section.description}</p>
                       </div>
                     </div>
